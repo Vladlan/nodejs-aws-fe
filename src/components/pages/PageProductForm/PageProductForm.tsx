@@ -9,7 +9,6 @@ import {useHistory, useParams} from 'react-router-dom';
 import PaperLayout from "components/PaperLayout/PaperLayout";
 import Typography from "@material-ui/core/Typography";
 import API_PATHS from "constants/apiPaths";
-import { v1 as uuidv1 } from 'uuid';
 
 const Form = (props: FormikProps<FormikValues>) => {
   const {
@@ -109,7 +108,7 @@ export default function PageProductForm() {
 
   const onSubmit = (values: FormikValues) => {
     const formattedValues = ProductSchema.cast(values);
-    const productToSave = id ? {...ProductSchema.cast(formattedValues), id} : { ...formattedValues, id: uuidv1() };
+    const productToSave = id ? {...ProductSchema.cast(formattedValues), id} : { ...formattedValues };
     console.log('productToSave !!!!!', productToSave);
     axios.post(`${API_PATHS.bff}/products`, productToSave)
       .then(() => history.push('/admin/products'))
