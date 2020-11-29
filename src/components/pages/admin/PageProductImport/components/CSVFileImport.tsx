@@ -39,22 +39,23 @@ export default function CSVFileImport({url, title}: CSVFileImportProps) {
         url,
         params: {
           csvFileName: encodeURIComponent(file.name)
-        }
-      })
+        },
+        headers: {
+          Authorization: `Basic ${localStorage.getItem("auth_token")}`,
+        },
+      });
       console.log('File to upload: ', file.name);
       console.log('File contentType: ', contentType);
       console.log('Uploading to: ', response.data);
-      const result = await fetch(response.data, {
+      const result = await axios.put(response.data, file, {
         method: 'PUT',
         headers: {
           "Content-Type": contentType
         },
-        body: file
-      })
+      });
       console.log('Result: ', result)
       setFile('');
-    }
-  ;
+    };
 
   return (
     <div className={classes.content}>
